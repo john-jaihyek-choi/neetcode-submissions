@@ -1,0 +1,53 @@
+class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.end = False       
+
+class PrefixTree:
+    """
+    1. initialize PrefixTree
+        - initializes root for the prefix tree
+    2. insert 
+        - iterate on word:
+            - create new TrieNode if no children by "char" exists
+            - traverse the head to the children TrieNode
+        - update the end indicator
+    """
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word: str) -> None:
+        head = self.root
+        
+        for i, char in enumerate(word):
+            if char not in head.children:
+                head.children[char] = TrieNode()
+
+            head = head.children[char]
+
+        head.end = True
+
+
+    def search(self, word: str) -> bool:
+        head = self.root
+
+        for i, char in enumerate(word):
+            if char not in head.children:
+                return False
+            
+            head = head.children[char]
+
+        return head.end
+
+
+    def startsWith(self, prefix: str) -> bool:
+        head = self.root
+
+        for i, char in enumerate(prefix):
+            if char not in head.children:
+                return False
+            
+            head = head.children[char]
+
+        return True
+        
